@@ -1,16 +1,43 @@
 <resources>
-    <string name="app_name">Weather2</string>
+    <string name="app_name">Погода</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="nav_header_title">Пользователь:</string>
+    <string name="nav_header_subtitle">Чертёнок №13</string>
+    <string name="action_settings">Настройки</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="menu_now">Погода сейчас</string>
+    <string name="menu_gallery">Прогноз погоды</string>
+    <string name="menu_developer">О разработчике</string>
+    <string name="menu_feedback">Форма обратной связи</string>
+    <string name="info">Информация</string>
+
+    <string name="empty">Пусто</string>
+    <string name="temper_grad" translatable="false">°C</string>
+    <string name="city_name_1">Москва</string>
+    <string name="city_name_2">Санкт-Петербург</string>
+    <string name="city_name_3">Екатеринбург</string>
+    <string name="city_name_4">Новосибирск</string>
+    <string name="city_name_5">Самара</string>
+    <string name="temper_1" translatable="false">12...14</string>
+    <string name="temper_2" translatable="false">8...11</string>
+    <string name="temper_3" translatable="false">9...12</string>
+    <string name="temper_4" translatable="false">5...8</string>
+    <string name="temper_5" translatable="false">10...14</string>
+    <string name="press_1" translatable="false">736</string>
+    <string name="press_2" translatable="false">742</string>
+    <string name="press_3" translatable="false">744</string>
+    <string name="press_4" translatable="false">738</string>
+    <string name="press_5" translatable="false">770</string>
+    <string name="cloud_1" translatable="false">0</string>
+    <string name="cloud_2" translatable="false">30</string>
+    <string name="cloud_3" translatable="false">50</string>
+    <string name="cloud_4" translatable="false">70</string>
+    <string name="cloud_5" translatable="false">100</string>
+    <string name="settings">Настройки</string>
+    <string name="imageName">иллюстрация</string>
+    <string name="pressName">атмосферное давление</string>
+    <string name="cloudName">облачность</string>
+    <string name="pres_mm"> мм.рт.ст.</string>
+    <string name="cloud">% облачности</string>
 </resources>
