@@ -5,11 +5,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">User:</string>
     <string name="nav_header_subtitle">imp №13</string>
-    <string name="action_settings">Settings</string>
 
     <string name="menu_now">Weather now</string>
     <string name="menu_gallery">Weather forecast</string>
     <string name="menu_developer">About the developer</string>
+    <string name="search_city">City selection</string>
     <string name="menu_feedback">Feedback form</string>
     <string name="info">Information</string>
 
@@ -25,4 +25,7 @@
     <string name="cloudName">cloudiness</string>
     <string name="pres_mm"> mm Hg</string>
     <string name="cloud">% cloudiness</string>
+    <string name="send">Send</string>
+    <string name="hintMessage">Input your message</string>
+    <string name="endMessage">Your message sended</string>
 </resources>
