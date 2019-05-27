@@ -27,7 +27,7 @@ public class FeedbackFragment extends Fragment {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                messageText.setText(R.string.endMessage);
+                messageText.setText(R.string.end_message);
             }
         });
     }

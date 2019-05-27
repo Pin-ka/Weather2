@@ -35,13 +35,16 @@
     <string name="cloud_4" translatable="false">70</string>
     <string name="cloud_5" translatable="false">100</string>
     <string name="settings">Настройки</string>
-    <string name="imageName">иллюстрация</string>
-    <string name="pressName">атмосферное давление</string>
-    <string name="cloudName">облачность</string>
+    <string name="image_name">иллюстрация</string>
+    <string name="press_name">атмосферное давление</string>
+    <string name="cloud_name">облачность</string>
     <string name="pres_mm"> мм.рт.ст.</string>
     <string name="cloud">% облачности</string>
     <string name="send">Отправить</string>
-    <string name="hintMessage">Введите сообщение</string>
-    <string name="endMessage">Ваше сообщение отправлено</string>
+    <string name="hint_message">Введите сообщение</string>
+    <string name="end_message">Ваше сообщение отправлено</string>
+    <string name="environment">Окружающая среда</string>
+    <string name="temp_environment_title">Температура вокруг</string>
+    <string name="humid_environment_title">Влажность вокруг</string>
 
 </resources>

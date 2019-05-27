@@ -15,11 +15,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static boolean []checkBoxes={true,true,true};
     DrawerLayout drawer;
+    FrameLayout frameLayout2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,9 @@ public class MainActivity extends AppCompatActivity
         if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
             Menu menu = navigationView.getMenu();
             menu.findItem(R.id.nav_search_city).setVisible(false);
+            menu.findItem(R.id.nav_environment).setVisible(false);
         }
+        frameLayout2=findViewById(R.id.fragment2);
     }
 
     @Override
@@ -110,9 +115,9 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
-    private void replaceFragment(int idFragment, Fragment fragment){
+    private void replaceFragment(int idFrameLayout, Fragment fragment){
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(idFragment,fragment);
+        fragmentTransaction.replace(idFrameLayout,fragment);
         fragmentTransaction.commit();
     }
 
@@ -121,12 +126,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_now) {
+            clearFrameLayout(frameLayout2);
             replaceDetailedFragment();
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
                 CitiesListFragment citiesListFragment=new CitiesListFragment();
                 replaceFragment(R.id.fragment1,citiesListFragment);
             }
         } else if (id == R.id.nav_forecast) {
+            clearFrameLayout(frameLayout2);
             ForecastFragment forecastFragment=new ForecastFragment();
             replaceFragment(R.id.fragment2,forecastFragment);
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
@@ -136,6 +143,7 @@ public class MainActivity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_developer) {
+            clearFrameLayout(frameLayout2);
             FragmentDeveloper fragmentDeveloper=new FragmentDeveloper();
             replaceFragment(R.id.fragment2,fragmentDeveloper);
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
@@ -145,6 +153,7 @@ public class MainActivity extends AppCompatActivity
             }
 
         } else if (id == R.id.nav_feedback) {
+            clearFrameLayout(frameLayout2);
             FeedbackFragment feedbackFragment=new FeedbackFragment();
             replaceFragment(R.id.fragment2,feedbackFragment);
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
@@ -152,13 +161,23 @@ public class MainActivity extends AppCompatActivity
                 FragmentImage fragmentImage=new FragmentImage();
                 replaceFragment(R.id.fragment1,fragmentImage);
             }
-
         } else if (id==R.id.nav_search_city){
-                CitiesListFragment citiesListFragment=new CitiesListFragment();
-                replaceFragment(R.id.fragment2,citiesListFragment);
+            clearFrameLayout(frameLayout2);
+            CitiesListFragment citiesListFragment=new CitiesListFragment();
+            replaceFragment(R.id.fragment2,citiesListFragment);
+        }else if (id==R.id.nav_environment){
+            clearFrameLayout(frameLayout2);
+            EnvironmentView environmentView=new EnvironmentView(this);
+            frameLayout2.addView(environmentView);
         }
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void clearFrameLayout(FrameLayout frameLayout){
+        if(frameLayout.getChildCount()!=0){
+            frameLayout.removeAllViews();
+        }
     }
 }

@@ -7,7 +7,7 @@
     <EditText
         android:id="@+id/textEdit"
         android:layout_width="match_parent"
-        android:hint="@string/hintMessage"
+        android:hint="@string/hint_message"
         android:layout_height="200dp"
         android:background="@android:color/transparent"
         android:textColor="@android:color/white"/>

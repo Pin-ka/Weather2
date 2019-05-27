@@ -4,12 +4,12 @@
     <group android:checkableBehavior="all">
         <item
             android:id="@+id/menu_press"
-            android:title="@string/pressName"/>
+            android:title="@string/press_name"/>
         <item
             android:id="@+id/menu_cloud"
-            android:title="@string/cloudName"/>
+            android:title="@string/cloud_name"/>
         <item
             android:id="@+id/menu_image"
-            android:title="@string/imageName"/>
+            android:title="@string/image_name"/>
     </group>
 </menu>
