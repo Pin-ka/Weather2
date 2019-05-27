@@ -4,12 +4,12 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Пользователь:</string>
     <string name="nav_header_subtitle">Чертёнок №13</string>
-    <string name="action_settings">Настройки</string>
 
     <string name="menu_now">Погода сейчас</string>
     <string name="menu_gallery">Прогноз погоды</string>
+    <string name="search_city">Выбор города</string>
     <string name="menu_developer">О разработчике</string>
-    <string name="menu_feedback">Форма обратной связи</string>
+    <string name="menu_feedback">Обратная связь</string>
     <string name="info">Информация</string>
 
     <string name="empty">Пусто</string>
@@ -40,4 +40,8 @@
     <string name="cloudName">облачность</string>
     <string name="pres_mm"> мм.рт.ст.</string>
     <string name="cloud">% облачности</string>
+    <string name="send">Отправить</string>
+    <string name="hintMessage">Введите сообщение</string>
+    <string name="endMessage">Ваше сообщение отправлено</string>
+
 </resources>
