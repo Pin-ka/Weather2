@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity
         if(savedInstanceState==null){
             replaceDetailedFragment();
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
-                replaceCitiesListFragment(R.id.fragment1);
+                CitiesListFragment citiesListFragment=new CitiesListFragment();
+                replaceFragment(R.id.fragment1,citiesListFragment);
             }
         }
     }
@@ -108,10 +110,9 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
-    private void replaceCitiesListFragment(int idFragment){
-        CitiesListFragment citiesListFragment=new CitiesListFragment();
+    private void replaceFragment(int idFragment, Fragment fragment){
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(idFragment,citiesListFragment);
+        fragmentTransaction.replace(idFragment,fragment);
         fragmentTransaction.commit();
     }
 
@@ -122,49 +123,39 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_now) {
             replaceDetailedFragment();
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
-                replaceCitiesListFragment(R.id.fragment1);
+                CitiesListFragment citiesListFragment=new CitiesListFragment();
+                replaceFragment(R.id.fragment1,citiesListFragment);
             }
         } else if (id == R.id.nav_forecast) {
             ForecastFragment forecastFragment=new ForecastFragment();
-            FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment2,forecastFragment);
-            fragmentTransaction.commit();
+            replaceFragment(R.id.fragment2,forecastFragment);
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
                 FragmentImage.idImage=R.drawable.forecast_image;
                 FragmentImage fragmentImage=new FragmentImage();
-                FragmentTransaction fragmentTransactionFor1=getSupportFragmentManager().beginTransaction();
-                fragmentTransactionFor1.replace(R.id.fragment1,fragmentImage);
-                fragmentTransactionFor1.commit();
+                replaceFragment(R.id.fragment1,fragmentImage);
             }
 
         } else if (id == R.id.nav_developer) {
             FragmentDeveloper fragmentDeveloper=new FragmentDeveloper();
-            FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment2,fragmentDeveloper);
-            fragmentTransaction.commit();
+            replaceFragment(R.id.fragment2,fragmentDeveloper);
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
                 FragmentImage.idImage=R.drawable.cat;
                 FragmentImage fragmentImage=new FragmentImage();
-                FragmentTransaction fragmentTransactionFor1=getSupportFragmentManager().beginTransaction();
-                fragmentTransactionFor1.replace(R.id.fragment1,fragmentImage);
-                fragmentTransactionFor1.commit();
+                replaceFragment(R.id.fragment1,fragmentImage);
             }
 
         } else if (id == R.id.nav_feedback) {
             FeedbackFragment feedbackFragment=new FeedbackFragment();
-            FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment2,feedbackFragment);
-            fragmentTransaction.commit();
+            replaceFragment(R.id.fragment2,feedbackFragment);
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
                 FragmentImage.idImage=R.drawable.send_message;
                 FragmentImage fragmentImage=new FragmentImage();
-                FragmentTransaction fragmentTransactionFor1=getSupportFragmentManager().beginTransaction();
-                fragmentTransactionFor1.replace(R.id.fragment1,fragmentImage);
-                fragmentTransactionFor1.commit();
+                replaceFragment(R.id.fragment1,fragmentImage);
             }
 
         } else if (id==R.id.nav_search_city){
-                replaceCitiesListFragment(R.id.fragment2);
+                CitiesListFragment citiesListFragment=new CitiesListFragment();
+                replaceFragment(R.id.fragment2,citiesListFragment);
         }
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
