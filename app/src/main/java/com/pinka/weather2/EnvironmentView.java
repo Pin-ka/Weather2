@@ -4,11 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class EnvironmentView extends LinearLayout {
-    TextView inputTempText,inputHumidText;
-
 
     public EnvironmentView(Context context) {
         super(context);
@@ -33,13 +30,5 @@ public class EnvironmentView extends LinearLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        initChildViews();
-    }
-
-    private void initChildViews() {
-        inputTempText=this.findViewById(R.id.inputTempText);
-        inputTempText.setText("Кастом 1");
-        inputHumidText=this.findViewById(R.id.inputHumidText);
-        inputHumidText.setText("Кастом 2");
     }
 }

@@ -1,6 +1,10 @@
 package com.pinka.weather2;
 
 import android.content.res.Configuration;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
@@ -15,13 +19,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public static boolean []checkBoxes={true,true,true};
-    DrawerLayout drawer;
-    FrameLayout frameLayout2;
+    private DrawerLayout drawer;
+    private EnvironmentView environment;
+    private TextView inputTempTextEnvironment,inputHumidTextEnvironment;
+    private StringBuilder currentHumidity=new StringBuilder();
+    private StringBuilder currentTemperature=new StringBuilder();
+    Menu menu;
 
 
     @Override
@@ -30,6 +40,47 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         initViews();
         showFragments(savedInstanceState);
+        getSensors();
+    }
+
+    private void getSensors() {
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        Sensor sensorTemperature = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+        Sensor sensorHumidity = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY);
+        SensorEventListener listenerTemperature=new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                showTemperatureSensor(event);
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            }
+        };
+        SensorEventListener listenerHumidity=new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                showHumiditySensor(event);
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            }
+        };
+        sensorManager.registerListener(listenerTemperature, sensorTemperature,SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(listenerHumidity, sensorHumidity,SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    private void showHumiditySensor(SensorEvent event) {
+        currentHumidity.append(event.values[0]).append(" %");
+        inputHumidTextEnvironment.setText(currentHumidity);
+        currentHumidity.setLength(0);
+    }
+
+    private void showTemperatureSensor(SensorEvent event) {
+        currentTemperature.append(event.values[0]).append(" °C");
+        inputTempTextEnvironment.setText(currentTemperature);
+        currentTemperature.setLength(0);
     }
 
     private void showFragments(Bundle savedInstanceState) {
@@ -45,6 +96,7 @@ public class MainActivity extends AppCompatActivity
     private void initViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        menu=toolbar.getMenu();
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
@@ -53,12 +105,17 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+        environment=findViewById(R.id.environment);
         if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
             Menu menu = navigationView.getMenu();
             menu.findItem(R.id.nav_search_city).setVisible(false);
             menu.findItem(R.id.nav_environment).setVisible(false);
+            environment.setVisibility(View.VISIBLE);
+        }else {
+            environment.setVisibility(View.INVISIBLE);
         }
-        frameLayout2=findViewById(R.id.fragment2);
+        inputTempTextEnvironment=environment.findViewById(R.id.inputTempText);
+        inputHumidTextEnvironment=environment.findViewById(R.id.inputHumidText);
     }
 
     @Override
@@ -101,6 +158,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             }
         }
+
         replaceDetailedFragment();
         invalidateOptionsMenu();
         return true;
@@ -126,24 +184,31 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_now) {
-            clearFrameLayout(frameLayout2);
+            invalidateOptionsMenu();
+            environment.setVisibility(View.INVISIBLE);
             replaceDetailedFragment();
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
                 CitiesListFragment citiesListFragment=new CitiesListFragment();
                 replaceFragment(R.id.fragment1,citiesListFragment);
             }
         } else if (id == R.id.nav_forecast) {
-            clearFrameLayout(frameLayout2);
+            menu.clear();
+            environment.setVisibility(View.INVISIBLE);
             ForecastFragment forecastFragment=new ForecastFragment();
             replaceFragment(R.id.fragment2,forecastFragment);
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
-                FragmentImage.idImage=R.drawable.forecast_image;
-                FragmentImage fragmentImage=new FragmentImage();
-                replaceFragment(R.id.fragment1,fragmentImage);
+                environment.setVisibility(View.VISIBLE);
+                FrameLayout frameLayout=findViewById(R.id.fragment1);
+                if(frameLayout.getChildCount()>1){
+                    frameLayout.removeViewAt(1);
+                }
+            } else {
+                environment.setVisibility(View.INVISIBLE);
             }
 
         } else if (id == R.id.nav_developer) {
-            clearFrameLayout(frameLayout2);
+            menu.clear();
+            environment.setVisibility(View.INVISIBLE);
             FragmentDeveloper fragmentDeveloper=new FragmentDeveloper();
             replaceFragment(R.id.fragment2,fragmentDeveloper);
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
@@ -151,9 +216,9 @@ public class MainActivity extends AppCompatActivity
                 FragmentImage fragmentImage=new FragmentImage();
                 replaceFragment(R.id.fragment1,fragmentImage);
             }
-
         } else if (id == R.id.nav_feedback) {
-            clearFrameLayout(frameLayout2);
+            menu.clear();
+            environment.setVisibility(View.INVISIBLE);
             FeedbackFragment feedbackFragment=new FeedbackFragment();
             replaceFragment(R.id.fragment2,feedbackFragment);
             if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
@@ -162,22 +227,22 @@ public class MainActivity extends AppCompatActivity
                 replaceFragment(R.id.fragment1,fragmentImage);
             }
         } else if (id==R.id.nav_search_city){
-            clearFrameLayout(frameLayout2);
+            invalidateOptionsMenu();
+            environment.setVisibility(View.INVISIBLE);
             CitiesListFragment citiesListFragment=new CitiesListFragment();
             replaceFragment(R.id.fragment2,citiesListFragment);
         }else if (id==R.id.nav_environment){
-            clearFrameLayout(frameLayout2);
-            EnvironmentView environmentView=new EnvironmentView(this);
-            frameLayout2.addView(environmentView);
+            menu.clear();
+            environment.setVisibility(View.VISIBLE);
+            FrameLayout frameLayout=findViewById(R.id.fragment2);
+            if(frameLayout.getChildCount()>1){
+                frameLayout.removeViewAt(1);
+            }
+
         }
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private void clearFrameLayout(FrameLayout frameLayout){
-        if(frameLayout.getChildCount()!=0){
-            frameLayout.removeAllViews();
-        }
-    }
 }

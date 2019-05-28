@@ -17,9 +17,7 @@ import java.util.Objects;
 
 public class CitiesListFragment extends Fragment {
     private ListView listView;
-
     public static int currentPosition = 0;
-
     private Bundle savedInstanceState=null;
 
     @Override

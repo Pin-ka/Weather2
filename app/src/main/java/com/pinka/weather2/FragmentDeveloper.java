@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class FragmentDeveloper extends Fragment {
-    TextView nameText,aboutText;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_developer,container,false);
@@ -22,8 +21,8 @@ public class FragmentDeveloper extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        nameText=view.findViewById(R.id.textName);
-        aboutText=view.findViewById(R.id.textAbout);
+        TextView nameText = view.findViewById(R.id.textName);
+        TextView aboutText = view.findViewById(R.id.textAbout);
         nameText.setText("Разработано: Екатерина Кадырова");
         aboutText.setText("\n" +
                 "Не знаю, что рассказывать о себе,\n" +

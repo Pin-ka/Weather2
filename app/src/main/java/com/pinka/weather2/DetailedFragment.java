@@ -20,7 +20,7 @@ public class DetailedFragment extends Fragment {
     private TextView temperText, temperName, pressText, cloudText, cityName;
     private ImageView image;
     private LinearLayout pressLayout,cloudLayout;
-    int index=CitiesListFragment.currentPosition;
+    private int index=CitiesListFragment.currentPosition;
 
     public static final String KEY="currentCity";
 
@@ -45,6 +45,7 @@ public class DetailedFragment extends Fragment {
                              Bundle savedInstanceState) {
         assert getArguments() != null;
         index=getArguments().getInt("currentCity",0);
+
         return inflater.inflate(R.layout.fragment_detailed,container,false);
     }
 
@@ -67,9 +68,9 @@ public class DetailedFragment extends Fragment {
     }
 
     private void setViews() {
-            String[] cityNames = getResources().getStringArray(R.array.Cities);
-            String currentName=cityNames[getIndex()];
-            cityName.setText(currentName);
+        String[] cityNames = getResources().getStringArray(R.array.Cities);
+        String currentName=cityNames[CitiesListFragment.currentPosition];
+        cityName.setText(currentName);
 
         if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
             temperText.setTextSize(30);
@@ -80,19 +81,18 @@ public class DetailedFragment extends Fragment {
         }
 
         String[] tempers=getResources().getStringArray(R.array.Tempers);
-        String currentTemper= tempers[getIndex()];
+        String currentTemper= tempers[CitiesListFragment.currentPosition];
         temperText.setText(currentTemper);
 
         @SuppressLint("Recycle") TypedArray images = getResources().
                 obtainTypedArray(R.array.weather_images);
-        image.setImageResource(images.getResourceId(getIndex(), -1));
-
+        image.setImageResource(images.getResourceId(CitiesListFragment.currentPosition, -1));
         String[] presses=getResources().getStringArray(R.array.press);
-        String currentPress= presses[getIndex()];
+        String currentPress= presses[CitiesListFragment.currentPosition];
         pressText.setText(currentPress);
 
         String[] clouds=getResources().getStringArray(R.array.cloud);
-        String currentCloud= clouds[getIndex()];
+        String currentCloud= clouds[CitiesListFragment.currentPosition];
         cloudText.setText(currentCloud);
 
         if(!MainActivity.checkBoxes[0]) pressLayout.setVisibility(View.GONE);
