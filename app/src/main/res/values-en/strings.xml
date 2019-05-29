@@ -20,12 +20,15 @@
     <string name="city_name_4">Novosibirsk</string>
     <string name="city_name_5">Samara</string>
     <string name="settings">Settings</string>
-    <string name="imageName">picture</string>
-    <string name="pressName">atmospheric pressure</string>
-    <string name="cloudName">cloudiness</string>
+    <string name="image_name">picture</string>
+    <string name="press_name">atmospheric pressure</string>
+    <string name="cloud_name">cloudiness</string>
     <string name="pres_mm"> mm Hg</string>
     <string name="cloud">% cloudiness</string>
     <string name="send">Send</string>
-    <string name="hintMessage">Input your message</string>
-    <string name="endMessage">Your message sended</string>
+    <string name="hint_message">Input your message</string>
+    <string name="end_message">Your message has been sent</string>
+    <string name="environment">Environment</string>
+    <string name="temp_environment_title">Temperature around</string>
+    <string name="humid_environment_title">Humidity around</string>
 </resources>

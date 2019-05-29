@@ -11,8 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class FeedbackFragment extends Fragment {
-    EditText messageText;
-    Button sendButton;
+    private EditText messageText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -22,12 +21,12 @@ public class FeedbackFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sendButton=view.findViewById(R.id.send);
+        Button sendButton = view.findViewById(R.id.send);
         messageText=view.findViewById(R.id.textEdit);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                messageText.setText(R.string.endMessage);
+                messageText.setText(R.string.end_message);
             }
         });
     }

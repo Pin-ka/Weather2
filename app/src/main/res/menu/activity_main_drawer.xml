@@ -16,6 +16,10 @@
             android:id="@+id/nav_search_city"
             android:icon="@drawable/icon_bubble"
             android:title="@string/search_city" />
+        <item
+            android:id="@+id/nav_environment"
+            android:icon="@drawable/icon_bubble"
+            android:title="@string/environment" />
     </group>
 
     <item android:title="@string/info">

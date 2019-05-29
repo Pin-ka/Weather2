@@ -12,7 +12,6 @@ import android.widget.ImageView;
 
 
 public class FragmentImage extends Fragment {
-    ImageView image;
     public static int idImage;
 
     @Override
@@ -24,7 +23,7 @@ public class FragmentImage extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        image=view.findViewById(R.id.image_input);
+        ImageView image = view.findViewById(R.id.image_input);
         image.setImageResource(idImage);
     }
 }

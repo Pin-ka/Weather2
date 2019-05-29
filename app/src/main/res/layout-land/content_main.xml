@@ -12,14 +12,19 @@
         android:layout_marginTop="50dp"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
-
+        android:layout_weight="1">
+        <com.pinka.weather2.EnvironmentView
+            android:id="@+id/environment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/fragment2"
         android:layout_marginTop="50dp"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        tools:ignore="UselessParent"/>
 
 </LinearLayout>

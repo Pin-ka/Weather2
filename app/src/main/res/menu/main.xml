@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <group android:checkableBehavior="all">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="all"
+        android:id="@+id/group_menu">
         <item
             android:id="@+id/menu_press"
-            android:title="@string/pressName"/>
+            android:title="@string/press_name"/>
         <item
             android:id="@+id/menu_cloud"
-            android:title="@string/cloudName"/>
+            android:title="@string/cloud_name"/>
         <item
             android:id="@+id/menu_image"
-            android:title="@string/imageName"/>
+            android:title="@string/image_name"/>
     </group>
 </menu>
