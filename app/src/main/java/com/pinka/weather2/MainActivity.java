@@ -1,5 +1,6 @@
 package com.pinka.weather2;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -23,14 +24,21 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+
+import static com.pinka.weather2.DetailedFragment.KEY_CITY;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     public static boolean []checkBoxes={true,true,true};
+    public static String []weatherData=new String[3];
+    public static boolean isBackgroundServiceEnd=false;
     private DrawerLayout drawer;
     private EnvironmentView environment;
     private TextView inputTempTextEnvironment,inputHumidTextEnvironment;
     private StringBuilder currentHumidity=new StringBuilder();
     private StringBuilder currentTemperature=new StringBuilder();
+
     Menu menu;
 
 
@@ -116,6 +124,9 @@ public class MainActivity extends AppCompatActivity
         }
         inputTempTextEnvironment=environment.findViewById(R.id.inputTempText);
         inputHumidTextEnvironment=environment.findViewById(R.id.inputHumidText);
+        Intent intent = new Intent(getApplicationContext(), FindWeatherService.class);
+        intent.putExtra(KEY_CITY,CitiesListFragment.currentPosition);
+        startService(intent);
     }
 
     @Override
@@ -244,5 +255,4 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

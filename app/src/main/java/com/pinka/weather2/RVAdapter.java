@@ -29,7 +29,7 @@ public class RVAdapter extends RecyclerView.Adapter <RVAdapter.RVViewHolder> {
         rvViewHolder.dateTextView.setText(data.get(i).date);
         rvViewHolder.temperatureText.setText(data.get(i).temperature);
         rvViewHolder.pressTextView.setText(data.get(i).press);
-       rvViewHolder.cloudTextView.setText(data.get(i).cloud);
+        rvViewHolder.cloudTextView.setText(data.get(i).cloud);
     }
 
     @Override
