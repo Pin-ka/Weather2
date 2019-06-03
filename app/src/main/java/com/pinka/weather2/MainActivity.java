@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static boolean []checkBoxes={true,true,true};
+
     private DrawerLayout drawer;
     private EnvironmentView environment;
     private TextView inputTempTextEnvironment,inputHumidTextEnvironment;

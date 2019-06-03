@@ -1,6 +1,7 @@
 package com.pinka.weather2;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,8 +18,10 @@ import java.util.Objects;
 
 public class CitiesListFragment extends Fragment {
     private ListView listView;
-    public static int currentPosition = 0;
+    public static int currentPosition;
     private Bundle savedInstanceState=null;
+
+    public static final String indexCityKey = "index_City_Key";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -44,6 +47,9 @@ public class CitiesListFragment extends Fragment {
         super.onResume();
         if (savedInstanceState != null) {
             currentPosition = savedInstanceState.getInt("CurrentCity", 0);
+            final SharedPreferences indexCityPref = Objects.requireNonNull(getActivity()).
+                    getSharedPreferences(indexCityKey, Context.MODE_PRIVATE);
+            saveToPreference(indexCityPref);
         }
         if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
             listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -75,6 +81,9 @@ public class CitiesListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 currentPosition = position;
+                final SharedPreferences indexCityPref = Objects.requireNonNull(getActivity()).
+                        getSharedPreferences(indexCityKey, Context.MODE_PRIVATE);
+                saveToPreference(indexCityPref);
                 showCoatOfArms();
             }
         });
@@ -101,5 +110,12 @@ public class CitiesListFragment extends Fragment {
             fragmentTransaction.replace(R.id.fragment2,detailedFragment);
             fragmentTransaction.commit();
         }
+    }
+
+    private void saveToPreference(SharedPreferences preferences) {
+        SharedPreferences.Editor editor = preferences.edit();
+        int indexCity = currentPosition;
+        editor.putInt(indexCityKey, indexCity);
+        editor.apply();
     }
 }
