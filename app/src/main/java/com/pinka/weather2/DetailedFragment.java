@@ -1,6 +1,7 @@
 package com.pinka.weather2;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ public class DetailedFragment extends Fragment {
     private int index=CitiesListFragment.currentPosition;
 
     public static final String KEY="currentCity";
+    public static final String KEY_CITY="KEY_CITY";
 
     public static DetailedFragment create(int index) {
         DetailedFragment f = new DetailedFragment();
@@ -72,6 +74,11 @@ public class DetailedFragment extends Fragment {
         String currentName=cityNames[CitiesListFragment.currentPosition];
         cityName.setText(currentName);
 
+        @SuppressLint("Recycle") TypedArray images = getResources().
+                obtainTypedArray(R.array.weather_images);
+        image.setImageResource(images.getResourceId(CitiesListFragment.currentPosition, -1));
+
+
         if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
             temperText.setTextSize(30);
             temperName.setTextSize(30);
@@ -80,20 +87,14 @@ public class DetailedFragment extends Fragment {
             image.setLayoutParams(params);
         }
 
-        String[] tempers=getResources().getStringArray(R.array.Tempers);
-        String currentTemper= tempers[CitiesListFragment.currentPosition];
-        temperText.setText(currentTemper);
+        Intent intent = new Intent(Objects.requireNonNull(getActivity()).getApplicationContext(), FindWeatherService.class);
+        intent.putExtra(KEY_CITY,CitiesListFragment.currentPosition);
+        getActivity().startService(intent);
 
-        @SuppressLint("Recycle") TypedArray images = getResources().
-                obtainTypedArray(R.array.weather_images);
-        image.setImageResource(images.getResourceId(CitiesListFragment.currentPosition, -1));
-        String[] presses=getResources().getStringArray(R.array.press);
-        String currentPress= presses[CitiesListFragment.currentPosition];
-        pressText.setText(currentPress);
-
-        String[] clouds=getResources().getStringArray(R.array.cloud);
-        String currentCloud= clouds[CitiesListFragment.currentPosition];
-        cloudText.setText(currentCloud);
+        temperText.setText(MainActivity.weatherData[0]);
+        pressText.setText(MainActivity.weatherData[1]);
+        cloudText.setText(MainActivity.weatherData[2]);
+        MainActivity.isBackgroundServiceEnd=false;
 
         if(!MainActivity.checkBoxes[0]) pressLayout.setVisibility(View.GONE);
         if(!MainActivity.checkBoxes[1]) cloudLayout.setVisibility(View.GONE);
