@@ -1,28 +1,31 @@
 package com.pinka.weather2;
 
-import android.app.Service;
+import android.app.IntentService;
 import android.content.Intent;
-import android.os.IBinder;
 
-public class FindWeatherService extends Service {
+public class FindWeatherService extends IntentService {
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        int cityName=intent.getIntExtra(DetailedFragment.KEY_CITY,0);
-        String[] tempers=getResources().getStringArray(R.array.Tempers);
-        MainActivity.weatherData[0]= tempers[cityName];
-        String[] presses=getResources().getStringArray(R.array.press);
-        MainActivity.weatherData[1]= presses[cityName];
-        String[] clouds=getResources().getStringArray(R.array.cloud);
-        MainActivity.weatherData[2]= clouds[cityName];
-
-        MainActivity.isBackgroundServiceEnd=true;
-
-        return super.onStartCommand(intent, flags, startId);
+    final static String KEY_BROADCAST_TEMPER ="KEY_BROADCAST_TEMPER";
+    final static String KEY_BROADCAST_PRESS ="KEY_BROADCAST_PRESS";
+    final static String KEY_BROADCAST_CLOUD ="KEY_BROADCAST_CLOUD";
+    public FindWeatherService() {
+        super("background_service_a2l5");
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    protected void onHandleIntent(Intent intent) {
+        int cityName=intent.getIntExtra(DetailedFragment.KEY_CITY,0);
+        String[] tempers=getResources().getStringArray(R.array.Tempers);
+        String currentTemp=tempers[cityName];
+        String[] presses=getResources().getStringArray(R.array.press);
+        String currentPress=presses[cityName];
+        String[] clouds=getResources().getStringArray(R.array.cloud);
+        String currentCloud=clouds[cityName];
+
+        Intent broadcastIntent = new Intent(DetailedFragment.BROADCAST_ACTION);
+        broadcastIntent.putExtra(KEY_BROADCAST_TEMPER,currentTemp);
+        broadcastIntent.putExtra(KEY_BROADCAST_PRESS,currentPress);
+        broadcastIntent.putExtra(KEY_BROADCAST_CLOUD,currentCloud);
+        sendBroadcast(broadcastIntent);
     }
 }

@@ -1,7 +1,10 @@
 package com.pinka.weather2;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -25,6 +28,9 @@ public class DetailedFragment extends Fragment {
 
     public static final String KEY="currentCity";
     public static final String KEY_CITY="KEY_CITY";
+    final static String BROADCAST_ACTION = "com.pinka.weather2";
+
+    private ServiceFinishedReceiver receiver = new ServiceFinishedReceiver();
 
     public static DetailedFragment create(int index) {
         DetailedFragment f = new DetailedFragment();
@@ -91,14 +97,39 @@ public class DetailedFragment extends Fragment {
         intent.putExtra(KEY_CITY,CitiesListFragment.currentPosition);
         getActivity().startService(intent);
 
-        temperText.setText(MainActivity.weatherData[0]);
-        pressText.setText(MainActivity.weatherData[1]);
-        cloudText.setText(MainActivity.weatherData[2]);
-        MainActivity.isBackgroundServiceEnd=false;
-
         if(!MainActivity.checkBoxes[0]) pressLayout.setVisibility(View.GONE);
         if(!MainActivity.checkBoxes[1]) cloudLayout.setVisibility(View.GONE);
         if(!MainActivity.checkBoxes[2]) image.setVisibility(View.GONE);
     }
 
+    private class ServiceFinishedReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final Intent receivedIntent=intent;
+            Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    String currentTemp=receivedIntent.getStringExtra(FindWeatherService.KEY_BROADCAST_TEMPER);
+                    temperText.setText(currentTemp);
+                    String currentPress=receivedIntent.getStringExtra(FindWeatherService.KEY_BROADCAST_PRESS);
+                    pressText.setText(currentPress);
+                    String currentCloud=receivedIntent.getStringExtra(FindWeatherService.KEY_BROADCAST_CLOUD);
+                    cloudText.setText(currentCloud);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Objects.requireNonNull(getActivity()).registerReceiver(receiver, new IntentFilter(BROADCAST_ACTION));
+    }
+
+    @Override
+    public void onStop() {
+        Objects.requireNonNull(getActivity()).unregisterReceiver(receiver);
+        super.onStop();
+    }
 }

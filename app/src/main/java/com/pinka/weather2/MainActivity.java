@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static boolean []checkBoxes={true,true,true};
-    public static String []weatherData=new String[3];
-    public static boolean isBackgroundServiceEnd=false;
     private DrawerLayout drawer;
     private EnvironmentView environment;
     private TextView inputTempTextEnvironment,inputHumidTextEnvironment;
