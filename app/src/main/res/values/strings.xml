@@ -15,10 +15,15 @@
     <string name="empty">Пусто</string>
     <string name="temper_grad" translatable="false">°C</string>
     <string name="city_name_1">Москва</string>
-    <string name="city_name_2">Санкт-Петербург</string>
+    <string name="city_name_2">Казань</string>
     <string name="city_name_3">Екатеринбург</string>
     <string name="city_name_4">Новосибирск</string>
     <string name="city_name_5">Самара</string>
+    <string name="city_name_1_for_OWM" translatable="false">Moscow</string>
+    <string name="city_name_2_for_OWM" translatable="false">Kazan</string>
+    <string name="city_name_3_for_OWM" translatable="false">Yekaterinburg</string>
+    <string name="city_name_4_for_OWM" translatable="false">Novosibirsk</string>
+    <string name="city_name_5_for_OWM" translatable="false">Samara</string>
     <string name="temper_1" translatable="false">12...14</string>
     <string name="temper_2" translatable="false">8...11</string>
     <string name="temper_3" translatable="false">9...12</string>

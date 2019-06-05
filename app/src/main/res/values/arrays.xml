@@ -7,6 +7,13 @@
         <item>@string/city_name_4</item>
         <item>@string/city_name_5</item>
     </array>
+    <array name="Cities_for_OWM">
+        <item>@string/city_name_1_for_OWM</item>
+        <item>@string/city_name_2_for_OWM</item>
+        <item>@string/city_name_3_for_OWM</item>
+        <item>@string/city_name_4_for_OWM</item>
+        <item>@string/city_name_5_for_OWM</item>
+    </array>
     <array name="Tempers">
         <item>@string/temper_1</item>
         <item>@string/temper_2</item>

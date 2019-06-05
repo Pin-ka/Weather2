@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -60,8 +61,15 @@ public class DetailedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        final SharedPreferences indexCityPref = Objects.requireNonNull(getActivity()).
+                getSharedPreferences(CitiesListFragment.indexCityKey, Context.MODE_PRIVATE);
+        readFromPreference(indexCityPref);
         initViews(view);
         setViews();
+    }
+
+    private void readFromPreference(SharedPreferences preferences) {
+        CitiesListFragment.currentPosition = preferences.getInt(CitiesListFragment.indexCityKey, 0);
     }
 
     private void initViews(View view) {
@@ -79,11 +87,6 @@ public class DetailedFragment extends Fragment {
         String[] cityNames = getResources().getStringArray(R.array.Cities);
         String currentName=cityNames[CitiesListFragment.currentPosition];
         cityName.setText(currentName);
-
-        @SuppressLint("Recycle") TypedArray images = getResources().
-                obtainTypedArray(R.array.weather_images);
-        image.setImageResource(images.getResourceId(CitiesListFragment.currentPosition, -1));
-
 
         if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE) {
             temperText.setTextSize(30);
@@ -116,6 +119,22 @@ public class DetailedFragment extends Fragment {
                     pressText.setText(currentPress);
                     String currentCloud=receivedIntent.getStringExtra(FindWeatherService.KEY_BROADCAST_CLOUD);
                     cloudText.setText(currentCloud);
+
+                    int imageIndex;
+                    int cloudness = Integer.parseInt(currentCloud);
+                    if(cloudness==0){
+                        imageIndex=0;
+                    }else if (cloudness<=30&&cloudness>0){
+                        imageIndex=1;
+                    }else if(cloudness<=50&&cloudness>30){
+                        imageIndex=2;
+                    }else if(cloudness<100&&cloudness>50){
+                        imageIndex=3;
+                    }else imageIndex=4;
+
+                    @SuppressLint("Recycle") TypedArray images = getResources().
+                            obtainTypedArray(R.array.weather_images);
+                    image.setImageResource(images.getResourceId(imageIndex, -1));
                 }
             });
         }
