@@ -92,11 +92,15 @@ public class CitiesListFragment extends Fragment {
     private void showCoatOfArms() {
         if (getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE) {
             listView.setItemChecked(currentPosition, true);
-            DetailedFragment detailedFragment = (DetailedFragment) Objects.requireNonNull(getFragmentManager()).
-                    findFragmentById(R.id.fragment2);
+
+            DetailedFragment detailedFragment=null;
+            if(!MainActivity.isAnotherFragmentInFragment2){
+                detailedFragment = (DetailedFragment) Objects.requireNonNull(getFragmentManager()).
+                        findFragmentById(R.id.fragment2);
+            }
             if (detailedFragment == null || detailedFragment.getIndex() != currentPosition) {
                 detailedFragment = DetailedFragment.create(currentPosition);
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                FragmentTransaction fragmentTransaction = Objects.requireNonNull(getFragmentManager()).beginTransaction();
                 fragmentTransaction.replace(R.id.fragment2, detailedFragment);
                 fragmentTransaction.commit();
             }

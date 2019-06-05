@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static boolean []checkBoxes={true,true,true};
+    public static boolean isAnotherFragmentInFragment2;
+
+    static int itemMenu=1;
 
     private DrawerLayout drawer;
     private EnvironmentView environment;
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initViews();
         showFragments(savedInstanceState);
         getSensors();
@@ -117,10 +121,8 @@ public class MainActivity extends AppCompatActivity
             Menu menu = navigationView.getMenu();
             menu.findItem(R.id.nav_search_city).setVisible(false);
             menu.findItem(R.id.nav_environment).setVisible(false);
-            environment.setVisibility(View.VISIBLE);
-        }else {
-            environment.setVisibility(View.INVISIBLE);
         }
+        environment.setVisibility(View.INVISIBLE);
         inputTempTextEnvironment=environment.findViewById(R.id.inputTempText);
         inputHumidTextEnvironment=environment.findViewById(R.id.inputHumidText);
         Intent intent = new Intent(getApplicationContext(), FindWeatherService.class);
@@ -201,6 +203,8 @@ public class MainActivity extends AppCompatActivity
                 CitiesListFragment citiesListFragment=new CitiesListFragment();
                 replaceFragment(R.id.fragment1,citiesListFragment);
             }
+            isAnotherFragmentInFragment2=false;
+            itemMenu=1;
         } else if (id == R.id.nav_forecast) {
             menu.clear();
             environment.setVisibility(View.INVISIBLE);
@@ -215,7 +219,8 @@ public class MainActivity extends AppCompatActivity
             } else {
                 environment.setVisibility(View.INVISIBLE);
             }
-
+            isAnotherFragmentInFragment2=true;
+            itemMenu=2;
         } else if (id == R.id.nav_developer) {
             menu.clear();
             environment.setVisibility(View.INVISIBLE);
@@ -226,6 +231,8 @@ public class MainActivity extends AppCompatActivity
                 FragmentImage fragmentImage=new FragmentImage();
                 replaceFragment(R.id.fragment1,fragmentImage);
             }
+            isAnotherFragmentInFragment2 =true;
+            itemMenu=3;
         } else if (id == R.id.nav_feedback) {
             menu.clear();
             environment.setVisibility(View.INVISIBLE);
@@ -236,11 +243,15 @@ public class MainActivity extends AppCompatActivity
                 FragmentImage fragmentImage=new FragmentImage();
                 replaceFragment(R.id.fragment1,fragmentImage);
             }
+            isAnotherFragmentInFragment2=false;
+            itemMenu=4;
         } else if (id==R.id.nav_search_city){
             invalidateOptionsMenu();
             environment.setVisibility(View.INVISIBLE);
-            CitiesListFragment citiesListFragment=new CitiesListFragment();
-            replaceFragment(R.id.fragment2,citiesListFragment);
+            CitiesListFragment citiesListFragment = new CitiesListFragment();
+            replaceFragment(R.id.fragment2, citiesListFragment);
+            isAnotherFragmentInFragment2 = true;
+            itemMenu=1;
         }else if (id==R.id.nav_environment){
             menu.clear();
             environment.setVisibility(View.VISIBLE);
@@ -248,10 +259,56 @@ public class MainActivity extends AppCompatActivity
             if(frameLayout.getChildCount()>1){
                 frameLayout.removeViewAt(1);
             }
-
+            isAnotherFragmentInFragment2 =false;
+            itemMenu=2;
         }
         drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            FrameLayout frameLayout1 = findViewById(R.id.fragment1);
+            if(frameLayout1.getChildCount()>1){
+                frameLayout1.removeViewAt(1);
+            }
+            FrameLayout frameLayout2 = findViewById(R.id.fragment2);
+            if(frameLayout2.getChildCount()>1){
+                frameLayout2.removeViewAt(1);
+            }
+            switch (itemMenu){
+                case 1:{
+                    CitiesListFragment citiesListFragment=new CitiesListFragment();
+                    replaceFragment(R.id.fragment1,citiesListFragment);
+                    break;
+                }
+                case 2:{
+                    environment.setVisibility(View.VISIBLE);
+                    ForecastFragment forecastFragment=new ForecastFragment();
+                    replaceFragment(R.id.fragment2,forecastFragment);
+                    break;
+                }
+                case 3:{
+                    FragmentImage.idImage=R.drawable.cat;
+                    FragmentImage fragmentImage=new FragmentImage();
+                    replaceFragment(R.id.fragment1,fragmentImage);
+                    FragmentDeveloper fragmentDeveloper=new FragmentDeveloper();
+                    replaceFragment(R.id.fragment2,fragmentDeveloper);
+                    break;
+                }
+                case 4:{
+                    FragmentImage.idImage=R.drawable.send_message;
+                    FragmentImage fragmentImage=new FragmentImage();
+                    replaceFragment(R.id.fragment1,fragmentImage);
+                    FeedbackFragment feedbackFragment=new FeedbackFragment();
+                    replaceFragment(R.id.fragment2,feedbackFragment);
+                    break;
+                }
+            }
+        }
+    }
+
 }
